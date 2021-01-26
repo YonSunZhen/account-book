@@ -11,17 +11,17 @@ const ViewTab = ({activeTab = LIST_VIEW, onTabChange = () => {}}: ViewTabProp) =
 
   const generateLinkClass = (current, view) => {
     return (current === view) ? 'nav-link active' : 'nav-link';
-  }
+  };
 
   const onClickView = (e, view) => {
     e.preventDefault();
     onTabChange(view);
-  }
+  };
 
   return (
     <ul className='nav nav-tabs nav-fill my-4'>
       <li className='nav-item'>
-        <a className={generateLinkClass(activeTab, LIST_VIEW)} href='#' onClick={(e) => {onClickView(e, LIST_VIEW)}}>
+        <a className={generateLinkClass(activeTab, LIST_VIEW)} href='#' onClick={(e) => {onClickView(e, LIST_VIEW);}}>
           <Ionicon
             className='rounded-circle mr-z'
             fontSize='25px'
@@ -32,7 +32,7 @@ const ViewTab = ({activeTab = LIST_VIEW, onTabChange = () => {}}: ViewTabProp) =
           </a>
       </li>
       <li className='nav-item'>
-        <a className={generateLinkClass(activeTab, CHART_VIEW)} href='#' onClick={(e) => {onClickView(e, CHART_VIEW)}}>
+        <a className={generateLinkClass(activeTab, CHART_VIEW)} href='#' onClick={(e) => {onClickView(e, CHART_VIEW);}}>
           <Ionicon
             className='rounded-circle mr-z'
             fontSize='25px'
@@ -43,7 +43,7 @@ const ViewTab = ({activeTab = LIST_VIEW, onTabChange = () => {}}: ViewTabProp) =
         </a>
       </li>
     </ul>
-  )
-}
+  );
+};
 
 export default ViewTab;

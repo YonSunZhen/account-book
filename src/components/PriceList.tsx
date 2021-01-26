@@ -28,7 +28,7 @@ const PriceList = ({ items = [], onModifyItem = () => {}, onDeleteItem = () => {
               {(item.category.type === 'income') ? '+' : '-'}{item.price}元
             </span>
             <span className='col-2'>{item.date}</span>
-            <a className='col-1' onClick={() => {onModifyItem(item)}}>
+            <a className='col-1' href="" onClick={() => {onModifyItem(item);}}>
               <Ionicon
                 className='rounded-circle'
                 fontSize='30px'
@@ -37,7 +37,7 @@ const PriceList = ({ items = [], onModifyItem = () => {}, onDeleteItem = () => {
                 icon='ios-create-outline'
               />
             </a>
-            <a className='col-1' onClick={() => {onDeleteItem(item)}}>
+            <a className='col-1' onClick={() => {onDeleteItem(item);}}>
               <Ionicon
                 className='rounded-circle'
                 fontSize='30px'
@@ -50,8 +50,8 @@ const PriceList = ({ items = [], onModifyItem = () => {}, onDeleteItem = () => {
         ))
       }
     </ul>
-  )
-}
+  );
+};
 
 // PriceList.propTypes = {
 //   items: ProTypes.array.isRequired,

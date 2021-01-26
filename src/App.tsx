@@ -32,7 +32,7 @@ const items = [
       iconName: 'ios-plane'
     }
   }
-]
+];
 
 function App() {
   return (
@@ -49,8 +49,7 @@ function App() {
       <MonthPicker 
         year={2021}
         month={1}
-        onChange={(year, month) => {console.log(year, month);
-        }}
+        onChange={(year, month) => {console.log(year, month);}}
         />
     </div>
   );

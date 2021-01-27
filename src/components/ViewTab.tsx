@@ -29,7 +29,7 @@ const ViewTab = ({activeTab = LIST_VIEW, onTabChange = () => {}}: ViewTabProp) =
             icon='ios-paper'
           />
           列表模式
-          </a>
+        </a>
       </li>
       <li className='nav-item'>
         <a className={generateLinkClass(activeTab, CHART_VIEW)} href='#' onClick={(e) => {onClickView(e, CHART_VIEW);}}>

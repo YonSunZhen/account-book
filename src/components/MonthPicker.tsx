@@ -1,18 +1,21 @@
 import React from 'react';
 import { padLeft, range } from '../utility';
 
-interface MonthPickerProp {
-  year?: number;
-  month?: number;
+interface Prop {
+  year?: string;
+  month?: string;
   onChange?: Function;
 }
 
-class MonthPicker extends React.Component {
+interface State {
+  isOpen?: boolean;
+  selectedYear?: string;
+  selectedMonth?: string;
+}
 
-  props: MonthPickerProp = {};
-  state: any;
+class MonthPicker extends React.Component<Prop, State> {
 
-  constructor(props) {
+  constructor(props: Prop) {
     super(props);
     this.state = {
       isOpen: false
@@ -32,7 +35,7 @@ class MonthPicker extends React.Component {
     event.preventDefault();
     this.setState({
       selectedYear: yearNumber,
-      selectedMonth: null
+      selectedMonth: undefined
     });
   }
 
@@ -45,11 +48,18 @@ class MonthPicker extends React.Component {
     this.props.onChange && this.props.onChange(this.state.selectedYear, monthNumber);
   }
 
+  genSelectedClassName(number, selectedNumber) {
+    if (number === selectedNumber) {
+      return 'dropdown-item active';
+    }
+    return 'dropdown-item';
+  }
+
   render() {
     const { year = 0, month = 0 } = this.props;
     const { isOpen, selectedYear, selectedMonth } = this.state;
     const monthRange = range(12, 1);
-    const yearRange = range(9, -4).map(number => number + year);
+    const yearRange = range(9, -4).map(number => String(Number(number) + Number(year)));
     return (
       <div className='dropdown month-picker-component'>
         <h4>选择月份</h4>
@@ -64,24 +74,28 @@ class MonthPicker extends React.Component {
           <div className='dropdown-menu' style={{display: 'block'}}>
             <div className='row'>
               <div className='col border-right'>
-                {yearRange.map((yearNumber, index) =>  
-                  <a key={index} 
-                    href='#'
-                    onClick={(e) => {this.selectYear(e, yearNumber);}}
-                    className={(yearNumber === selectedYear) ? 'dropdown-item active' : 'dropdown-item'}>
-                    {yearNumber} 年
-                  </a>
-                )}
+                {
+                  yearRange.map((yearNumber, index) =>
+                    <a key={index} 
+                      href='#'
+                      onClick={(e) => {this.selectYear(e, yearNumber);}}
+                      className={this.genSelectedClassName(yearNumber, selectedYear)}>
+                      {yearNumber} 年
+                    </a>
+                  )
+                }
               </div>
               <div className='col'>
-                {monthRange.map((monthNumber, index) => 
-                  <a key={index} 
-                    href='#'
-                    onClick={(e) => {this.selectMonth(e, monthNumber);}}
-                    className={(monthNumber === selectedMonth) ? 'dropdown-item active' : 'dropdown-item'}>
-                    {padLeft(monthNumber)} 月
-                  </a>
-                )}
+                {
+                  monthRange.map((monthNumber, index) =>
+                    <a key={index} 
+                      href='#'
+                      onClick={(e) => {this.selectMonth(e, monthNumber);}}
+                      className={this.genSelectedClassName(monthNumber, selectedMonth)}>
+                      {padLeft(monthNumber)} 月
+                    </a>
+                  )
+                }
               </div>
             </div>
           </div>

@@ -20,15 +20,15 @@ const PriceList = ({ items = [], onModifyItem = () => {}, onDeleteItem = () => {
                 fontSize='30px'
                 style={{backgroundColor: '#007bff', padding: '5px'}}
                 color={'#fff'}
-                icon={item.category.iconName}
+                icon={item?.category?.iconName} //FIXME: 图标为何undefined
               />
             </span>
             <span className='col-5'>{item.title}</span>
             <span className='col-2 font-weight-bold'>
-              {(item.category.type === 'income') ? '+' : '-'}{item.price}元
+              {(item?.category?.type === 'income') ? '+' : '-'}{item.price}元
             </span>
             <span className='col-2'>{item.date}</span>
-            <a className='col-1' href="" onClick={() => {onModifyItem(item);}}>
+            <a className='col-1' href='#' onClick={() => {onModifyItem(item);}}>
               <Ionicon
                 className='rounded-circle'
                 fontSize='30px'
@@ -37,7 +37,7 @@ const PriceList = ({ items = [], onModifyItem = () => {}, onDeleteItem = () => {
                 icon='ios-create-outline'
               />
             </a>
-            <a className='col-1' onClick={() => {onDeleteItem(item);}}>
+            <a className='col-1' href='#' onClick={() => {onDeleteItem(item);}}>
               <Ionicon
                 className='rounded-circle'
                 fontSize='30px'

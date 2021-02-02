@@ -27,7 +27,7 @@ interface Item {
   categroy?: any;
 }
 
-const categories = {
+export const categories = {
   '1': {
     name: '旅行',
     type: 'outcome',
@@ -40,7 +40,7 @@ const categories = {
   }
 };
 
-const items = [
+export const items: Item[] = [
   {
     id: 1,
     title: '去云南旅游',

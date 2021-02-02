@@ -48,7 +48,7 @@ class MonthPicker extends React.Component<Prop, State> {
     this.props.onChange && this.props.onChange(this.state.selectedYear, monthNumber);
   }
 
-  genSelectedClassName(number, selectedNumber) {
+  genSelectedClassName = (number, selectedNumber) => {
     if (number === selectedNumber) {
       return 'dropdown-item active';
     }

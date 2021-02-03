@@ -31,7 +31,7 @@ const ViewTab = ({activeTab = LIST_VIEW, onTabChange = () => {}}: ViewTabProp) =
           列表模式
         </a>
       </li>
-      <li className='nav-item'>
+      <li className='nav-item '>
         <a className={generateLinkClass(activeTab, CHART_VIEW)} href='#' onClick={(e) => {onClickView(e, CHART_VIEW);}}>
           <Ionicon
             className='rounded-circle mr-z'

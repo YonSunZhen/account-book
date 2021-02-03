@@ -45,7 +45,7 @@ export const items: Item[] = [
     id: 1,
     title: '去云南旅游',
     price: 200,
-    date: '2018-09-10',
+    date: '2018-08-10',
     cid: 1
   },
   {
@@ -64,7 +64,7 @@ export const items: Item[] = [
   }
 ];
 
-const newItem = {
+export const newItem = {
   id: 1,
   title: '天天基金',
   price: 200,
@@ -78,8 +78,8 @@ class Home extends Component<Prop, State> {
     super(props);
     this.state = {
       items,
-      selectedYear: String(Day().year()),
-      selectedMonth: String(Day().month() + 1),
+      selectedYear: String(Day().year(2018).format('YYYY')),
+      selectedMonth: String(Day().month(8).format('M')),
       tabView: LIST_VIEW
     };
   }
@@ -163,7 +163,7 @@ class Home extends Component<Prop, State> {
             />
           }
           { tabView === CHART_VIEW &&
-            <h1>图表区域</h1>
+            <h1 className='chart-title'>图表区域</h1>
           }
         </div>
       </React.Fragment>

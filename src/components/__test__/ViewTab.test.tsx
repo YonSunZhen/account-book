@@ -1,25 +1,27 @@
 import ViewTab from '../ViewTab';
 import {LIST_VIEW, CHART_VIEW} from '../../utility';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 const props = {
   activeTab: LIST_VIEW,
-  onTabChange: jest.fn()
+  onTabChange: jest.fn((event, cb) => {
+    cb();
+  })
 };
 let wrapper;
 describe('test ViewTab component', () => {
   beforeEach(() => {
-    wrapper = shallow(<ViewTab {...props}></ViewTab>);
+    wrapper = mount(<ViewTab {...props}></ViewTab>);
   });
 
   it('should render correct tab for initial tab', () => {
     expect(wrapper.find('a').first().hasClass('active')).toEqual(true);
   });
 
-  // it('should trigger the correct function callbacks', () => {
-  //   const _listView = wrapper.find('.nav-link').first();
-  //   _listView.simulate('click');
-  //   expect(props.onTabChange).toHaveBeenCalled(); // TODO: 
-  // });
+  it('should trigger the correct function callbacks', () => {
+    const _listView = wrapper.find('.nav-link').first();
+    _listView.simulate('click');
+    expect(props.onTabChange).toHaveBeenCalled();
+  });
 });
 

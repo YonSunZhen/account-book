@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import MonthPicker from '../components/MonthPicker';
 import {LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME, padLeft} from '../utility';
 import PriceList from '../components/PriceList';
-import ViewTab from '../components/ViewTab';
+import Tabs, { Tab } from '../components/Tabs';
 import CreateBtn from '../components/CreateBtn';
 import TotalPrice from '../components/TotalPrice';
 import Day from 'dayjs';
+import Ionicon from 'react-ionicons';
 
 interface Prop {
 
@@ -72,6 +73,8 @@ export const newItem = {
   cid: 2
 };
 
+const tabViewList = [LIST_VIEW, CHART_VIEW];
+
 class Home extends Component<Prop, State> {
 
   constructor(props: Prop) {
@@ -92,9 +95,9 @@ class Home extends Component<Prop, State> {
     });
   }
 
-  onChangeView = (view) => {
+  onChangeView = (index) => {
     this.setState({
-      tabView: view
+      tabView: tabViewList[index]
     });
   }
 
@@ -150,10 +153,26 @@ class Home extends Component<Prop, State> {
           </div>
         </div>
         <div className='content-area py3 px-3'>
-          <ViewTab 
-            activeTab={tabView}
-            onTabChange={this.onChangeView}
-          />
+          <Tabs activeIndex={0} onTabChange={this.onChangeView}>
+            <Tab>
+              <Ionicon
+                className='rounded-circle mr-z'
+                fontSize='25px'
+                color={'#007bff'}
+                icon='ios-paper'
+              />
+              列表模式
+            </Tab>
+            <Tab>
+              <Ionicon
+                className='rounded-circle mr-z'
+                fontSize='25px'
+                color={'#007bff'}
+                icon='ios-pie'
+              />
+              图表模式
+            </Tab>
+          </Tabs>
           <CreateBtn onClick={this.onCreateItem}></CreateBtn>
           { tabView === LIST_VIEW &&
             <PriceList 
@@ -171,4 +190,4 @@ class Home extends Component<Prop, State> {
   }
 }
 
-export default Home;
+export default Home; 

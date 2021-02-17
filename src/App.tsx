@@ -8,11 +8,14 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 function App() {
   return (
     <Router>
-      <div>
-        <Route path='/' exact component={Home}></Route>
-        <Route path='/create' component={Create}></Route>
-        <Route path='/edit/:id' component={Create}></Route>
+      <div className='App'>
+        <div className='container pb-5'>
+          <Route path='/' exact component={Home}></Route>
+          <Route path='/create' component={Create}></Route>
+          <Route path='/edit/:id' component={Create}></Route>
+        </div>
       </div>
+
     </Router>
   );
 }

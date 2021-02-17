@@ -9,7 +9,7 @@ import Day from 'dayjs';
 import Ionicon from 'react-ionicons';
 
 interface Prop {
-
+  history?: any;
 }
 
 interface State {
@@ -102,9 +102,10 @@ class Home extends Component<Prop, State> {
   }
 
   onCreateItem = () => {
-    this.setState({
-      items: [newItem, ...this.state.items || []]
-    });
+    // this.setState({
+    //   items: [newItem, ...this.state.items || []]
+    // });
+    this.props.history.push('/create');
   }
 
   onModifyItem = (modifiedItem) => {

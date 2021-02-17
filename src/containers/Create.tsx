@@ -6,7 +6,7 @@ import { testCategories } from '../testData';
 import { TYPE_INCOME, TYPE_OUTCOME } from '../utility';
 
 interface Prop {
-
+  history?: any;
 }
 
 interface State {
@@ -15,6 +15,16 @@ interface State {
 class Create extends React.Component<Prop, State> {
 
   onSelectCategoryChange = (category) => {  
+  }
+
+  onPriceFormSubmit = (data) => {
+    console.log('debug1');
+    console.log(data);
+    
+  }
+
+  onPriceFormCancel = () => {
+    this.props.history.push('/');
   }
 
   render() {
@@ -26,7 +36,7 @@ class Create extends React.Component<Prop, State> {
           <Tab>收入</Tab>
         </Tabs>
         <CategorySelect categories={filterCategories} onSelectCategory={this.onSelectCategoryChange}></CategorySelect>
-        <PriceForm></PriceForm>
+        <PriceForm onFormSubmit={this.onPriceFormSubmit} onCancelSubmit={this.onPriceFormCancel}></PriceForm>
       </div>
     );
   }

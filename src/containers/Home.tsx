@@ -7,9 +7,11 @@ import CreateBtn from '../components/CreateBtn';
 import TotalPrice from '../components/TotalPrice';
 import Day from 'dayjs';
 import Ionicon from 'react-ionicons';
+import withContext from '../WithContext';
+import { RouterProps } from 'react-router-dom';
 
-interface Prop {
-  history?: any;
+interface Prop extends RouterProps {
+  data?: any;
 }
 
 interface State {
@@ -102,14 +104,11 @@ class Home extends Component<Prop, State> {
   }
 
   onCreateItem = () => {
-    // this.setState({
-    //   items: [newItem, ...this.state.items || []]
-    // });
     this.props.history.push('/create');
   }
 
   onModifyItem = (modifiedItem) => {
-
+    this.props.history.push(`/edit/${modifiedItem.id}`);
   }
 
   onDelItem = (deletedItem) => {
@@ -120,6 +119,7 @@ class Home extends Component<Prop, State> {
   }
 
   render() {
+    const { data } = this.props;
     const { items = [], selectedYear, selectedMonth, tabView } = this.state;
     const itemsWithCategroy = items.map(item => {
       item.categroy = categories[item.cid];
@@ -191,4 +191,4 @@ class Home extends Component<Prop, State> {
   }
 }
 
-export default Home; 
+export default withContext(Home);

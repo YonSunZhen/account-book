@@ -24,3 +24,10 @@ export const Colors = {
   lightGray: '#efefef',
   white: '#fff',
 };
+
+export const flatternArr = (arr) => {
+  return arr.reduce((map, item) => {
+    map[item.id] = item;
+    return map;
+  }, {});
+};

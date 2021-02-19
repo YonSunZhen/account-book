@@ -2,45 +2,66 @@ import React from 'react';
 import CategorySelect from '../components/CategorySelect';
 import PriceForm from '../components/PriceForm';
 import Tabs, { Tab } from '../components/Tabs';
-import { testCategories } from '../testData';
 import { TYPE_INCOME, TYPE_OUTCOME } from '../utility';
 import withContext from '../WithContext';
-import { RouterProps } from 'react-router-dom';
+import { ItemInfo, RouteProps } from '../types';
+import { AppActions, AppState } from '../AppContext';
 
-interface Prop extends RouterProps{
-
+interface Prop extends RouteProps{
+  actions: Required<AppActions>;
+  data: Required<AppState>;
+  selectedCategoryId?: string;
 }
 
 interface State {
-  categories?: any;
+  editItem?: ItemInfo;
+  selectedCategoryId?: string;
+  selectedTab?: string;
 }
+
+const tabsText = [TYPE_OUTCOME, TYPE_INCOME];
 class Create extends React.Component<Prop, State> {
 
   constructor(props: Prop) {
-    super(props);
+    super(props);  
     this.state = {
-      categories: testCategories.filter(category => category.type === TYPE_OUTCOME)
+      selectedCategoryId: '',
+      selectedTab: TYPE_OUTCOME
     };
   }
 
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    const { data } = this.props;
+    const { items, categories } = data;
+    const editItem = (id && items[id]) ? items[id] : {};
+    this.setState({
+      editItem: editItem,
+      selectedTab: (id && editItem) ? categories[editItem.cid].type : TYPE_OUTCOME,
+      selectedCategoryId: (id && editItem) ? categories[editItem.cid].id : '1'    
+    });
+  }
+
   onTabChange = (index) => {
-    if (index === 0) {
-      this.setState({
-        categories: testCategories.filter(category => category.type === TYPE_OUTCOME)
-      });
-    } else {
-      this.setState({
-        categories: testCategories.filter(category => category.type === TYPE_INCOME)
-      });
-    }
+    this.setState({
+      selectedTab: tabsText[index]
+    });
   }
 
   onSelectCategoryChange = (category) => {  
+    this.setState({
+      selectedCategoryId: category.id
+    });
   }
 
-  onPriceFormSubmit = (data) => {
-    
-    
+  onPriceFormSubmit = (data, isEditMode) => {
+    const _data: ItemInfo = {...data, cid: this.state.selectedCategoryId};
+    if (isEditMode) {
+      this.props.actions.updateItem({..._data, id: this.props.match.params.id});
+    } else {
+      this.props.actions.createItem(_data);
+    }
+    this.props.history.push('/');
   }
 
   onPriceFormCancel = () => {
@@ -48,14 +69,17 @@ class Create extends React.Component<Prop, State> {
   }
 
   render() {
+    const { categories } = this.props.data;
+    const { selectedTab = '', selectedCategoryId, editItem } = this.state;
+    const filterCategories = Object.keys(categories).filter(id => categories[id].type === selectedTab).map(id => categories[id]);
     return (
       <div className=''>
-        <Tabs activeIndex={0} onTabChange={this.onTabChange}>
+        <Tabs activeIndex={tabsText.indexOf(selectedTab)} onTabChange={this.onTabChange}>
           <Tab>支出</Tab>
           <Tab>收入</Tab>
         </Tabs>
-        <CategorySelect categories={this.state.categories} onSelectCategory={this.onSelectCategoryChange}></CategorySelect>
-        <PriceForm onFormSubmit={this.onPriceFormSubmit} onCancelSubmit={this.onPriceFormCancel}></PriceForm>
+        <CategorySelect selectedCategoryId={selectedCategoryId} categories={filterCategories} onSelectCategory={this.onSelectCategoryChange}></CategorySelect>
+        <PriceForm item={editItem} onFormSubmit={this.onPriceFormSubmit} onCancelSubmit={this.onPriceFormCancel}></PriceForm>
       </div>
     );
   }

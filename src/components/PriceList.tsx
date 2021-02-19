@@ -1,9 +1,9 @@
 import React from 'react';
 import Ionicon from 'react-ionicons';
-import ProTypes from 'prop-types';
+import { ItemWithCategoryInfo } from '../types';
 
 interface PriceListProp {
-  items?: any,
+  items?: ItemWithCategoryInfo[],
   onModifyItem?: Function;
   onDeleteItem?: Function;
 }
@@ -20,12 +20,12 @@ const PriceList = ({ items = [], onModifyItem = () => {}, onDeleteItem = () => {
                 fontSize='30px'
                 style={{backgroundColor: '#007bff', padding: '5px'}}
                 color={'#fff'}
-                icon={item?.category?.iconName} //FIXME: 图标为何undefined
+                icon={item?.categroy?.iconName}
               />
             </span>
             <span className='col-5'>{item.title}</span>
             <span className='col-2 font-weight-bold'>
-              {(item?.category?.type === 'income') ? '+' : '-'}{item.price}元
+              {(item?.categroy?.type === 'income') ? '+' : '-'}{item.price}元
             </span>
             <span className='col-2'>{item.date}</span>
             <a className='col-1' href='#' onClick={() => {onModifyItem(item);}}>

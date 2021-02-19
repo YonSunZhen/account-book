@@ -31,3 +31,15 @@ export const flatternArr = (arr) => {
     return map;
   }, {});
 };
+
+export const genID = () => {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+
+export const parseToYearAndMonth = (str) => {
+  const date = str ? new Date(str) : new Date();
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+  };
+};

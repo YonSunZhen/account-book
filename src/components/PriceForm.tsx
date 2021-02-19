@@ -1,8 +1,8 @@
 import React from 'react';
+import { ItemInfo } from '../types';
 
 interface Prop {
-  item?: any;
-  titleInput?: any;
+  item?: ItemInfo;
   onFormSubmit?: Function;
   onCancelSubmit?: Function;
 }
@@ -23,18 +23,25 @@ class PriceForm extends React.Component<Prop, State> {
 
   // TODO: 添加表单验证 
   onClickSubmit = () => {
+    const { item } = this.props;
+    const editMode = !!item?.id;
     const title = this.titleInput.value.trim();
     const price = this.priceInput.value.trim();
     const date = this.dateInput.value.trim();
     const data = {title,price,date};
-    this.props.onFormSubmit && this.props.onFormSubmit(data);
+    // if (editMode) {
+    //   this.props.onFormSubmit && this.props.onFormSubmit({ ...item, title, price, date }, editMode)
+    // } else {
+    //   this.props.onFormSubmit && this.props.onFormSubmit({ title, price, date }, editMode)
+    // }
+    this.props.onFormSubmit && this.props.onFormSubmit({ ...data }, editMode);
   }
 
   onClickCancel = () => {
     this.props.onCancelSubmit && this.props.onCancelSubmit();
   }
 
-  render() {
+  render() { 
     const { title, price, date } = this.props.item || {};
     return (
       <div>

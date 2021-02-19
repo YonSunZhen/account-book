@@ -8,10 +8,12 @@ import TotalPrice from '../components/TotalPrice';
 import Day from 'dayjs';
 import Ionicon from 'react-ionicons';
 import withContext from '../WithContext';
-import { RouterProps } from 'react-router-dom';
+import { RouteProps } from '../types';
+import { AppActions, AppState } from '../AppContext';
 
-interface Prop extends RouterProps {
-  data?: any;
+interface Prop extends RouteProps {
+  data: Required<AppState>;
+  actions: Required<AppActions>;
 }
 
 interface State {
@@ -30,51 +32,6 @@ interface Item {
   categroy?: any;
 }
 
-export const categories = {
-  '1': {
-    name: '旅行',
-    type: 'outcome',
-    iconName: 'ios-plane'
-  },
-  '2': {
-    name: '理财收入',
-    type: 'income',
-    iconName: 'ios-plane'
-  }
-};
-
-export const items: Item[] = [
-  {
-    id: 1,
-    title: '去云南旅游',
-    price: 200,
-    date: '2018-08-10',
-    cid: 1
-  },
-  {
-    id: 1,
-    title: '去云南旅游',
-    price: 200,
-    date: '2018-09-10',
-    cid: 1
-  },
-  {
-    id: 1,
-    title: '天天基金',
-    price: 200,
-    date: '2018-09-10',
-    cid: 2
-  }
-];
-
-export const newItem = {
-  id: 1,
-  title: '天天基金',
-  price: 200,
-  date: '2018-09-10',
-  cid: 2
-};
-
 const tabViewList = [LIST_VIEW, CHART_VIEW];
 
 class Home extends Component<Prop, State> {
@@ -82,9 +39,8 @@ class Home extends Component<Prop, State> {
   constructor(props: Prop) {
     super(props);
     this.state = {
-      items,
       selectedYear: String(Day().year(2018).format('YYYY')),
-      selectedMonth: String(Day().month(8).format('M')),
+      selectedMonth: String(Day().month(7).format('M')),
       tabView: LIST_VIEW
     };
   }
@@ -112,28 +68,26 @@ class Home extends Component<Prop, State> {
   }
 
   onDelItem = (deletedItem) => {
-    const filterdItems = this.state.items?.filter(item => item.id !== deletedItem);
-    this.setState({
-      items: filterdItems
-    });
+    this.props.actions.deleteItem(deletedItem);
   }
 
   render() {
     const { data } = this.props;
-    const { items = [], selectedYear, selectedMonth, tabView } = this.state;
-    const itemsWithCategroy = items.map(item => {
-      item.categroy = categories[item.cid];
-      return item;
+    const { selectedYear, selectedMonth, tabView } = this.state;
+    const { items = [], categories } = data;
+    const itemsWithCategroy = Object.keys(items).map(id => {
+      items[id].categroy = categories[items[id].cid];
+      return items[id];
     }).filter(item => item.date?.includes(`${selectedYear}-${padLeft(selectedMonth)}`));
     let totalIncome = 0; 
     let totalOutcome = 0;
     itemsWithCategroy.forEach(item => {
-      if (item.categroy.type === TYPE_OUTCOME) {
-        totalOutcome += item.price || 0;
-      } else {
-        totalIncome += item.price || 0;
+      if (item.categroy?.type === TYPE_OUTCOME) {
+        totalOutcome += Number(item.price) || 0;
+      } else if (item.categroy?.type === TYPE_INCOME) {
+        totalIncome += Number(item.price) || 0;
       }
-    });
+    });    
     return (
       <React.Fragment>
         <div className='App-header'>

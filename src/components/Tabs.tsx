@@ -1,6 +1,5 @@
 import React from 'react';
 import Ionicon from 'react-ionicons';
-import {LIST_VIEW, CHART_VIEW} from '../utility';
 
 interface Prop {
   activeIndex?: number;
@@ -16,7 +15,8 @@ class Tabs extends React.Component<Prop, State> {
   constructor(props: Prop) {
     super(props);
     this.state = {
-      activeIndex: props.activeIndex
+      // activeIndex: props.activeIndex, // FIXME: 这样赋值无法获取到值
+      activeIndex: 0
     };
   }
 
@@ -29,8 +29,8 @@ class Tabs extends React.Component<Prop, State> {
   }
 
   render() {
-    const { children } = this.props;
-    const { activeIndex } = this.state;
+    const { children, activeIndex } = this.props;
+    // const { activeIndex } = this.state; // FIXME: 为什么这样取不到值
     return (
       <ul className='nav nav-tabs nav-fill my-4'>
         {

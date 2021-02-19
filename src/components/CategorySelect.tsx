@@ -1,43 +1,37 @@
 import React from 'react';
 import Ionicon from 'react-ionicons';
 import { Colors } from '../utility';
+import { CategoryInfo } from '../types';
 
 interface Prop {
-  categories?: any[],
-  selectedCategory?: any,
+  categories?: CategoryInfo[],
+  selectedCategoryId?: string,
   onSelectCategory?: Function
 }
 
 interface State {
-  selectedCategory?: any
+
 }
 
 class CategorySelect extends React.Component<Prop, State> {
-  constructor(props: Prop) {
-    super(props);
-    this.state = {
-      selectedCategory: props[0]
-    };
-  }
 
   selectCategory = (event, category) => {
     event.preventDefault();
     this.setState({
-      selectedCategory: category
+      selectedCategoryId: category
     });
     this.props.onSelectCategory && this.props.onSelectCategory(category);
   }
 
+  // TODO: render函数为何执行了多次
   render() {
-    const { categories } = this.props;
-    const { selectedCategory } = this.state;
-    const selectedCategoryId = selectedCategory?.id;
+    const { categories, selectedCategoryId } = this.props;
     return (
       <div className='category-select-component'>
         <div className='row'>
         {
           categories?.map((category, index) => {
-            const activeClassName = (selectedCategory === category.id) ? 'category-item col-3 active' : 'category-item col-3';
+            const activeClassName = (selectedCategoryId === category.id) ? 'category-item col-3 active' : 'category-item col-3';
             const iconColor = (category.id === selectedCategoryId) ? Colors.white : Colors.gray;
             const backColor = (category.id === selectedCategoryId) ? Colors.blue : Colors.lightGray;           
             return (

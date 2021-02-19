@@ -8,8 +8,12 @@ export interface AppActions {
 }
 
 export interface AppState {
-  items?: ItemInfo;
-  categories?: CategoryInfo;
+  items?: {
+    [key: string]: ItemInfo
+  };
+  categories?: {
+    [key: string]: CategoryInfo
+  };
 }
 
 export interface AppContextInfo {

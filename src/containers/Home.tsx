@@ -17,19 +17,9 @@ interface Prop extends RouteProps {
 }
 
 interface State {
-  items?: Item[];
   selectedYear?: string;
   selectedMonth?: string;
   tabView?: string;
-}
-
-interface Item {
-  id?: number;
-  title?: string;
-  price?: number;
-  date?: string;
-  cid: number;
-  categroy?: any;
 }
 
 const tabViewList = [LIST_VIEW, CHART_VIEW];
@@ -72,9 +62,8 @@ class Home extends Component<Prop, State> {
   }
 
   render() {
-    const { data } = this.props;
     const { selectedYear, selectedMonth, tabView } = this.state;
-    const { items = [], categories } = data;
+    const { items = [], categories } = this.props.data;
     const itemsWithCategroy = Object.keys(items).map(id => {
       items[id].categroy = categories[items[id].cid];
       return items[id];

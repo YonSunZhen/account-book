@@ -38,7 +38,7 @@ class Create extends React.Component<Prop, State> {
     this.setState({
       editItem: editItem,
       selectedTab: (id && editItem) ? categories[editItem.cid as string].type : TYPE_OUTCOME,
-      selectedCategoryId: (id && editItem) ? categories[editItem.cid as string].id : '1'    
+      selectedCategoryId: (id && editItem) ? categories[editItem.cid as string].id : '1'
     });
   }
 

@@ -108,42 +108,6 @@
       "timestamp": 1536969600000
     },
     {
-      "title": "新的吃饭",
-      "price": 2000,
-      "date": "2018-11-15",
-      "monthCategory": "2018-11",
-      "id": "_qmatbbw11",
-      "cid": "6",
-      "timestamp": 1542896269187
-    },
-    {
-      "title": "请别人喝茶",
-      "price": 300,
-      "date": "2018-11-15",
-      "monthCategory": "2018-11",
-      "id": "_qryggm533",
-      "cid": "3",
-      "timestamp": 1534291200000
-    },
-    {
-      "title": "饭局",
-      "price": 200,
-      "date": "2018-12-10",
-      "monthCategory": "2018-12",
-      "id": "_qmatbbw12",
-      "cid": "6",
-      "timestamp": 1544400000000
-    },
-    {
-      "title": "饭局第二个",
-      "price": 300,
-      "date": "2018-12-10",
-      "monthCategory": "2018-12",
-      "id": "_qmatbbw22",
-      "cid": "6",
-      "timestamp": 1544400000000
-    },
-    {
       "title": "兼职收入",
       "price": 500,
       "date": "2018-12-05",
@@ -151,15 +115,6 @@
       "timestamp": 1543968000000,
       "id": "_2cdxkbtzi",
       "cid": "11"
-    },
-    {
-      "title": "收入",
-      "price": 100,
-      "date": "2018-12-05",
-      "monthCategory": "2018-12",
-      "timestamp": 1543968000000,
-      "id": "_znmwyaciy",
-      "cid": "12"
     },
     {
       "title": "汽车保养",
@@ -211,6 +166,41 @@
         "id": "10",
         "type": "income"
       }
+    },
+    {
+      "title": "吃饭1",
+      "price": "10",
+      "date": "2021-02-25",
+      "cid": "2",
+      "id": "_e15d8qy2h",
+      "timestamp": 1614211200000
+    },
+    {
+      "title": "旅行",
+      "price": "100",
+      "date": "2021-02-25",
+      "cid": "1",
+      "monthCategory": "2021-2",
+      "timestamp": 1614211200000,
+      "id": "_ap3d4vws0"
+    },
+    {
+      "title": "旅行",
+      "price": "200",
+      "date": "2018-10-25",
+      "cid": "1",
+      "id": "_1z5a0volu",
+      "timestamp": 1540425600000,
+      "monthCategory": "2018-10"
+    },
+    {
+      "title": "666",
+      "price": "3231",
+      "date": "2021-02-26",
+      "cid": "5",
+      "id": "_87ox2ts5h",
+      "timestamp": 1614297600000,
+      "monthCategory": "2021-2"
     }
   ]
 }

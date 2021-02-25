@@ -5,11 +5,11 @@ import PriceList from '../components/PriceList';
 import Tabs, { Tab } from '../components/Tabs';
 import CreateBtn from '../components/CreateBtn';
 import TotalPrice from '../components/TotalPrice';
-import Day from 'dayjs';
 import Ionicon from 'react-ionicons';
 import withContext from '../WithContext';
 import { RouteProps } from '../types';
 import { AppActions, AppState } from '../AppContext';
+import Loader from '../components/Loader';
 
 interface Prop extends RouteProps {
   data: Required<AppState>;
@@ -17,8 +17,6 @@ interface Prop extends RouteProps {
 }
 
 interface State {
-  selectedYear?: string;
-  selectedMonth?: string;
   tabView?: string;
 }
 
@@ -29,18 +27,13 @@ class Home extends Component<Prop, State> {
   constructor(props: Prop) {
     super(props);
     this.state = {
-      selectedYear: String(Day().year(2018).format('YYYY')),
-      selectedMonth: String(Day().month(7).format('M')),
       tabView: LIST_VIEW
     };
   }
 
   // 必须使用箭头函数
-  onChangeDate = (year, month) => {
-    this.setState({
-      selectedYear: year,
-      selectedMonth: month
-    });
+  onChangeDate = async (year, month) => {
+    await this.props.actions.selectNewMonth(year, month);
   }
 
   onChangeView = (index) => {
@@ -62,12 +55,12 @@ class Home extends Component<Prop, State> {
   }
 
   render() {
-    const { selectedYear, selectedMonth, tabView } = this.state;
-    const { items = [], categories } = this.props.data;
+    const { tabView } = this.state;
+    const { items = [], categories, selectedYear, selectedMonth, isLoading } = this.props.data;
     const itemsWithCategroy = Object.keys(items).map(id => {
       items[id].categroy = categories[items[id].cid];
       return items[id];
-    }).filter(item => item.date?.includes(`${selectedYear}-${padLeft(selectedMonth)}`));
+    });
     let totalIncome = 0; 
     let totalOutcome = 0;
     itemsWithCategroy.forEach(item => {
@@ -83,8 +76,8 @@ class Home extends Component<Prop, State> {
           <div className='row'>
             <div className='col'>
               <MonthPicker
-                year={this.state.selectedYear}
-                month={this.state.selectedMonth}
+                year={selectedYear}
+                month={selectedMonth}
                 onChange={this.onChangeDate}
               />
             </div>
@@ -97,36 +90,43 @@ class Home extends Component<Prop, State> {
           </div>
         </div>
         <div className='content-area py3 px-3'>
-          <Tabs activeIndex={0} onTabChange={this.onChangeView}>
-            <Tab>
-              <Ionicon
-                className='rounded-circle mr-z'
-                fontSize='25px'
-                color={'#007bff'}
-                icon='ios-paper'
-              />
-              列表模式
-            </Tab>
-            <Tab>
-              <Ionicon
-                className='rounded-circle mr-z'
-                fontSize='25px'
-                color={'#007bff'}
-                icon='ios-pie'
-              />
-              图表模式
-            </Tab>
-          </Tabs>
-          <CreateBtn onClick={this.onCreateItem}></CreateBtn>
-          { tabView === LIST_VIEW &&
-            <PriceList 
-              items={itemsWithCategroy} 
-              onDeleteItem={this.onDelItem}
-              onModifyItem={this.onModifyItem}
-            />
+          { isLoading &&
+            <Loader></Loader>
           }
-          { tabView === CHART_VIEW &&
-            <h1 className='chart-title'>图表区域</h1>
+          { !isLoading &&
+            <React.Fragment>
+              <Tabs activeIndex={0} onTabChange={this.onChangeView}>
+                <Tab>
+                  <Ionicon
+                    className='rounded-circle mr-z'
+                    fontSize='25px'
+                    color={'#007bff'}
+                    icon='ios-paper'
+                  />
+                  列表模式
+                </Tab>
+                <Tab>
+                  <Ionicon
+                    className='rounded-circle mr-z'
+                    fontSize='25px'
+                    color={'#007bff'}
+                    icon='ios-pie'
+                  />
+                  图表模式
+                </Tab>
+              </Tabs>
+              <CreateBtn onClick={this.onCreateItem}></CreateBtn>
+              { tabView === LIST_VIEW &&
+                <PriceList 
+                  items={itemsWithCategroy} 
+                  onDeleteItem={this.onDelItem}
+                  onModifyItem={this.onModifyItem}
+                />
+              }
+              { tabView === CHART_VIEW &&
+                <h1 className='chart-title'>图表区域</h1>
+              }
+            </React.Fragment>
           }
         </div>
       </React.Fragment>

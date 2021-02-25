@@ -17,9 +17,6 @@ class CategorySelect extends React.Component<Prop, State> {
 
   selectCategory = (event, category) => {
     event.preventDefault();
-    this.setState({
-      selectedCategoryId: category
-    });
     this.props.onSelectCategory && this.props.onSelectCategory(category);
   }
 

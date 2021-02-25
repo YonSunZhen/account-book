@@ -54,9 +54,11 @@ class Create extends React.Component<Prop, State> {
     });
   }
 
-  onPriceFormSubmit = (data, isEditMode) => {
+  onPriceFormSubmit = async (data, isEditMode) => {
     const _data: ItemInfo = {...data, cid: this.state.selectedCategoryId};
     if (isEditMode) {
+      // FIXME: 这里为什么用不了await
+      // await this.props.actions.updateItem({..._data, id: this.props.match.params.id});
       this.props.actions.updateItem({..._data, id: this.props.match.params.id});
     } else {
       this.props.actions.createItem(_data);

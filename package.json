@@ -10,6 +10,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.4",
@@ -22,11 +23,11 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"npm run mock\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "mock": "json-server --watch db.json"
+    "mock": "json-server --watch db.json --port 3004"
   },
   "eslintConfig": {
     "extends": [
@@ -50,9 +51,11 @@
     "@types/enzyme": "^3.10.8",
     "@types/react-router-dom": "^5.1.7",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
+    "concurrently": "^6.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "^7.18.0",
     "json-server": "^0.16.3"
-  }
+  },
+  "proxy": "http://localhost:3004"
 }
